@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright The WildFly authors
+  ~ SPDX short identifier: Apache-2.0
+-->
+<module xmlns="urn:jboss:module:1.9" name="org.eclipse.krazo.resteasy">
+
+    <resources>
+        <artifact name="${org.eclipse.krazo:krazo-resteasy}"/>
+    </resources>
+    
+    <dependencies>
+        <module name="jakarta.annotation.api"/>
+        <module name="jakarta.interceptor.api"/>
+        <module name="jakarta.mvc.api"/>
+        <module name="jakarta.enterprise.api"/>
+        <module name="jakarta.servlet.api"/>
+        <module name="jakarta.validation.api"/>
+        <module name="jakarta.ws.rs.api"/>
+        <module name="org.eclipse.krazo.core"/>
+        <module name="org.jboss.resteasy.resteasy-core"/>
+        <module name="org.jboss.resteasy.resteasy-validator-provider"/>
+    </dependencies>
+</module>

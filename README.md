@@ -1,2 +1,2 @@
 # mvc-krazo
-WildFly subsystem and Galleon feature park for integrating the Eclipse Krazo Jakarta MVC implementation
+WildFly subsystem and Galleon feature pack for integrating the Eclipse Krazo Jakarta MVC implementation

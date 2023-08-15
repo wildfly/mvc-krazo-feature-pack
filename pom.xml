@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright The WildFly authors
+  ~ SPDX short identifier: Apache-2.0
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>39</version>
+    </parent>
+
+    <groupId>org.wildfly</groupId>
+    <artifactId>mvc-krazo-parent</artifactId>
+    <!--
+    Maintain separation between the artifact id and the version to help prevent
+    merge conflicts between commits changing the GA and those changing the V.
+    -->
+    <version>1.0.0.Beta1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>WildFly Jakarta MVC with Krazo -- Parent</name>
+    <description>Parent pom for producing a Galleon feature pack for including a Jakarta MVC capability into a WildFly installation.</description>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+	
+    <scm>
+        <connection>scm:git:${wildfly-extras.repo.scm.connection}</connection>
+        <developerConnection>scm:git:${wildfly-extras.repo.scm.connection}</developerConnection>
+        <url>${wildfly-extras.repo.scm.url}</url>
+        <tag>HEAD</tag>
+    </scm>
+	
+    <properties>
+        <!-- Require Java 11 -->
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.release>11</maven.compiler.release>
+
+        <!-- TODO Change the github org to wildfly-extras once repo ownership is transferred -->
+        <wildfly-extras.repo.scm.connection>git@github.com:bstansberry/mvc-krazo.git</wildfly-extras.repo.scm.connection>
+        <wildfly-extras.repo.scm.url>https://github.com/bstansberry/mvc-krazo</wildfly-extras.repo.scm.url>
+
+        <module.name>org.wildfly.extension.mvc-krazo</module.name>
+		
+        <assembly.tarLongFileMode>posix</assembly.tarLongFileMode>
+		
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Production code dependency versions -->
+        <version.jakarta.mvc>2.1.0</version.jakarta.mvc>
+        <version.org.apache.maven.plugins.maven-assembly-plugin>3.2.0</version.org.apache.maven.plugins.maven-assembly-plugin>
+        <version.org.eclipse.krazo>3.0.1</version.org.eclipse.krazo>
+        <version.org.wildfly>29.0.0.Final</version.org.wildfly>
+        <version.org.wildfly.core>21.1.0.Final</version.org.wildfly.core>
+        <version.org.wildfly.galleon-plugins>6.2.2.Final</version.org.wildfly.galleon-plugins>
+
+        <!-- Test dependency versions -->
+        <version.junit.junit>4.13.2</version.junit.junit>
+        <version.org.apache.httpcomponents>5.2.1</version.org.apache.httpcomponents>
+        <version.org.jboss.jboss-dmr>1.6.1.Final</version.org.jboss.jboss-dmr>
+        <version.org.jsoup.jsoup>1.15.3</version.org.jsoup.jsoup>
+        <version.shrinkwrap.resolvers>3.1.4</version.shrinkwrap.resolvers>
+        <version.org.wildfly.plugins.wildfly-jar-maven-plugin>8.1.0.Final</version.org.wildfly.plugins.wildfly-jar-maven-plugin>
+        <version.org.wildfly.plugins.wildfly-maven-plugin>4.0.0.Final</version.org.wildfly.plugins.wildfly-maven-plugin>
+        <version.org.wildfly.test>27.0.1.Final</version.org.wildfly.test>
+    </properties>
+
+    <!-- NOTE: Only include production code build dependencies here; use testsuite/pom.xml for test dependencies -->
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>jakarta.mvc</groupId>
+                <artifactId>jakarta.mvc-api</artifactId>
+                <version>${version.jakarta.mvc}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.krazo</groupId>
+                <artifactId>krazo-core</artifactId>
+                <version>${version.org.eclipse.krazo}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo</groupId>
+                <artifactId>krazo-resteasy</artifactId>
+                <version>${version.org.eclipse.krazo}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+			
+            <dependency>
+                <groupId>org.wildfly.core</groupId>
+                <artifactId>wildfly-controller</artifactId>
+                <version>${version.org.wildfly.core}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.wildfly.core</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wildfly.core</groupId>
+                <artifactId>wildfly-server</artifactId>
+                <version>${version.org.wildfly.core}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.wildfly.core</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-ee</artifactId>
+                <version>${version.org.wildfly}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+			
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <type>zip</type>
+                <version>${version.org.wildfly}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+			
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>mvc-krazo-galleon-content</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>mvc-krazo-subsystem</artifactId>
+                <version>${project.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+			
+        </dependencies>
+    </dependencyManagement>
+	
+    <modules>
+        <module>galleon-content</module>
+        <module>subsystem</module>
+        <module>wildfly-feature-pack</module>
+    </modules>
+	
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>wildfly-assembly-plugin</artifactId>
+                    <version>${version.org.apache.maven.plugins.maven-assembly-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.wildfly.galleon-plugins</groupId>
+                    <artifactId>wildfly-galleon-maven-plugin</artifactId>
+                    <version>${version.org.wildfly.galleon-plugins}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version.surefire.plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+</project>

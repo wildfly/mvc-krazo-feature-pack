@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright The WildFly authors
+  ~ SPDX short identifier: Apache-2.0
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.wildfly</groupId>
+        <artifactId>mvc-krazo-parent</artifactId>
+        <!--
+        Maintain separation between the artifact id and the version to help prevent
+        merge conflicts between commits changing the GA and those changing the V.
+        -->
+        <version>1.0.0.Beta1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>wildfly-mvc-krazo-feature-pack</artifactId>
+    <packaging>pom</packaging>
+
+    <name>WildFly Jakarta MVC with Krazo -- Feature Pack</name>
+    <description>Feature pack to provision Jakarta MVC with Krazo support for WildFly</description>
+    
+    <dependencies>
+         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>mvc-krazo-galleon-content</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-ee-galleon-pack</artifactId>
+            <type>zip</type>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <galleon.content.resources.directory>${basedir}/../galleon-content/target/resources</galleon.content.resources.directory>
+    </properties>
+    <build>                
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-common-feature-pack-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${galleon.content.resources.directory}</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Use copy-resources filtering to replace the GAV properties
+                             in the wildfly-user-feature-pack-build.xml file with their values. -->
+                        <id>filter-wildfly-user-feature-pack-build</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>wildfly-user-feature-pack-build.xml</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.galleon-plugins</groupId>
+                <artifactId>wildfly-galleon-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>wildfly-deployment-transformer-feature-pack-build</id>
+                        <goals>
+                            <goal>build-user-feature-pack</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <release-name>WildFly Full</release-name>
+                            <config-dir>${project.build.directory}</config-dir>
+                            <resources-dir>${basedir}/target/resources</resources-dir>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
