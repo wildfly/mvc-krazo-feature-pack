@@ -1,6 +1,6 @@
 /*
-   Copyright The WildFly Authors
-   SPDX short identifier: Apache-2.0
+ * Copyright The WildFly Authors
+ * SPDX-License-Identifier: Apache-2.0
  */
 package org.wildfly.extension.mvc.krazo;
 
@@ -31,7 +31,7 @@ import org.jboss.staxmapper.XMLExtendedStreamWriter;
 
 
 /**
- * WildFly extension that provide Jakarta MVC support based on Eclipse Krazo.
+ * WildFly extension that provides Jakarta MVC support based on Eclipse Krazo.
  *
  * @author <a href="mailto:brian.stansberry@redhat.com">Brian Stansberry</a>
  */
@@ -75,7 +75,7 @@ public final class MVCKrazoExtension implements Extension {
     }
 
     /**
-     * The subsystem parser, which uses stax to read and write to and from xml
+     * The subsystem parser, which uses stax to read and write to and from xml.
      */
     private static class SubsystemParser implements XMLStreamConstants, XMLElementReader<List<ModelNode>>, XMLElementWriter<SubsystemMarshallingContext> {
 

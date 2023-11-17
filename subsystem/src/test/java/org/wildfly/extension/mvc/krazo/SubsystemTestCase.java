@@ -1,6 +1,6 @@
 /*
-   Copyright The WildFly Authors
-   SPDX short identifier: Apache-2.0
+ * Copyright The WildFly Authors
+ * SPDX-License-Identifier: Apache-2.0
  */
 package org.wildfly.extension.mvc.krazo;
 

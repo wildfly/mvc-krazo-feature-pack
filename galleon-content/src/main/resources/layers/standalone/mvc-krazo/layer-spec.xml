@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<layer-spec xmlns="urn:jboss:galleon:layer-spec:1.0" name="mvc-krazo">
-    <dependencies>
-        <layer name="bean-validation"/>
-        <layer name="cdi"/>
-        <layer name="jaxrs-core"/>
-    </dependencies>
-    <feature-group name="mvc-krazo"/>
-</layer-spec>
