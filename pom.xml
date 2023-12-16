@@ -80,7 +80,6 @@
         <version.org.jboss.jboss-dmr>1.6.1.Final</version.org.jboss.jboss-dmr>
         <version.org.jsoup.jsoup>1.15.3</version.org.jsoup.jsoup>
         <version.shrinkwrap.resolvers>3.1.4</version.shrinkwrap.resolvers>
-        <version.org.wildfly.test>${version.org.wildfly}</version.org.wildfly.test>
     </properties>
 
     <!-- NOTE: Only include production code build dependencies here; use testsuite/pom.xml for test dependencies -->
