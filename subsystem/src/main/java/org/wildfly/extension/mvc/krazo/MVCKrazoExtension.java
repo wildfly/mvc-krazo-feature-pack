@@ -67,6 +67,11 @@ public final class MVCKrazoExtension extends SubsystemExtension<MVCKrazoExtensio
         }
     }
 
+    @Override
+    public Stability getStability() {
+        return Stability.PREVIEW;
+    }
+
     /**
      * Schema for the 'mvc-krazo' subsystem.
      */

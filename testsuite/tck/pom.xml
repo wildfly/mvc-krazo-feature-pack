@@ -34,7 +34,7 @@
         <as.debug.port>8787</as.debug.port>
         <surefire.system.args>${surefire.memory.args}</surefire.system.args>
         <server.jvm.args>${surefire.memory.args}</server.jvm.args>
-
+        <server.jboss.args>--stability=preview</server.jboss.args>
         <!-- Feature pack to use to provision mvc-krazo -->
         <krazo.feature.pack.groupId>${project.groupId}</krazo.feature.pack.groupId>
         <krazo.feature.pack.artifactId>wildfly-mvc-krazo-feature-pack</krazo.feature.pack.artifactId>
@@ -167,7 +167,7 @@
                             <jboss-home>${project.build.directory}/wildfly-complete</jboss-home>
                             <offline>true</offline>
                             <commands>
-                                <command>embed-server</command>
+                                <command>embed-server --stability=preview</command>
                                 <command>/extension=org.wildfly.extension.mvc-krazo:add</command>
                                 <command>/subsystem=mvc-krazo:add</command>
                                 <command>stop-embedded-server</command>
@@ -187,7 +187,7 @@
                             org.wildfly.extension.mvc.krazo.tck.WildFlyArchiveProvider
                         </ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                         <server.jvm.args>${server.jvm.args}</server.jvm.args>
-                        <server.jboss.args>--stability=preview</server.jboss.args>
+                        <server.jboss.args>${server.jboss.args}</server.jboss.args>
                     </systemProperties>
                     <argLine>${surefire.system.args}</argLine>
                 </configuration>
