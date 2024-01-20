@@ -121,29 +121,7 @@
                     </galleon-options>
                 </configuration>
                 <executions>
-                    <!-- Provision a full installation -->
-                    <!--<execution>
-                        <id>default-provisioning</id>
-                        <goals>
-                            <goal>provision</goal>
-                        </goals>
-                        <phase>compile</phase>
-                        <configuration>
-                            <provisioning-dir>${project.build.directory}/wildfly-complete</provisioning-dir>
-                            <feature-packs>
-                                <feature-pack>
-                                    <location>${testsuite.galleon.pack.groupId}:${testsuite.galleon.pack.artifactId}:${testsuite.galleon.pack.version}</location>
-                                    <included-packages>
-                                        <name>docs.examples.configs</name>
-                                    </included-packages>
-                                </feature-pack>
-                                <feature-pack>
-                                    <location>${project.groupId}:wildfly-mvc-krazo-feature-pack:${project.version}</location>
-                                </feature-pack>
-                            </feature-packs>
-                        </configuration>
-                    </execution>-->
-                    <!-- Provision a server using layers -->
+                    <!-- Provision with layers -->
                     <execution>
                         <id>layers-provisioning</id>
                         <goals>
@@ -172,6 +150,42 @@
                             </layers>
                         </configuration>
                     </execution>
+                    <!-- Provision a full installation -->
+                    <execution>
+                        <id>wildfly-complete-provisioning</id>
+                        <goals>
+                            <goal>provision</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <provisioning-dir>${project.build.directory}/wildfly-complete</provisioning-dir>
+                            <feature-packs>
+                                <feature-pack>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>wildfly-mvc-krazo-feature-pack</artifactId>
+                                    <version>${project.version}</version>
+                                </feature-pack>
+                            </feature-packs>
+                        </configuration>
+                    </execution>
+                    <!-- Add the mvc-krazo subsystem to the wildfly-complete dist's standalone.xml -->
+                    <execution>
+                        <id>configure-mvc-krazo-subsystem</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>execute-commands</goal>
+                        </goals>
+                        <configuration>
+                            <jboss-home>${project.build.directory}/wildfly-complete</jboss-home>
+                            <offline>true</offline>
+                            <commands>
+                                <command>embed-server</command>
+                                <command>/extension=org.wildfly.extension.mvc-krazo:add</command>
+                                <command>/subsystem=mvc-krazo:add</command>
+                                <command>stop-embedded-server</command>
+                            </commands>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -194,29 +208,31 @@
                         <id>default-test</id>
                         <phase>none</phase>
                     </execution>
-                    <!--<execution>
-                        <id>wildfly-complete</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <phase>test</phase>
-                        <configuration>
-                            <environmentVariables>
-                                <JBOSS_HOME>${project.build.directory}/wildfly-complete</JBOSS_HOME>
-                            </environmentVariables>
-                        </configuration>
-                    </execution>-->
                     <execution>
-                        <id>wildfly-layers</id>
+                        <id>layers-tests</id>
+                        <phase>test</phase>
                         <goals>
                             <goal>test</goal>
                         </goals>
+                        <configuration>
+                            <systemProperties>
+                                <jboss.home>${project.build.directory}/wildfly-layers</jboss.home>
+                            </systemProperties>
+                            <reportNameSuffix>wildfly-layers</reportNameSuffix>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>complete-dist-tests</id>
                         <phase>test</phase>
-<!--                        <configuration>-->
-<!--                            <environmentVariables>-->
-<!--                                <JBOSS_HOME>${project.build.directory}/wildfly-layers</JBOSS_HOME>-->
-<!--                            </environmentVariables>-->
-<!--                        </configuration>-->
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <systemProperties>
+                                <jboss.home>${project.build.directory}/wildfly-complete</jboss.home>
+                            </systemProperties>
+                            <reportNameSuffix>wildfly-complete</reportNameSuffix>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
