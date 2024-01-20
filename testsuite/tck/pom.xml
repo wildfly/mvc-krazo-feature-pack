@@ -145,7 +145,6 @@
                             </feature-packs>
                             <layers>
                                 <layer>core-server</layer>
-                                <layer>jsf</layer> <!-- TCK wars need jakarta.faces.webapp.FacesServlet for some reason -->
                                 <layer>mvc-krazo</layer>
                             </layers>
                         </configuration>
