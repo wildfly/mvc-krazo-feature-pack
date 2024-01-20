@@ -13,6 +13,7 @@
         <layer name="bean-validation"/>
         <layer name="cdi"/>
         <layer name="jaxrs-core"/>
+        <layer name="jsf" optional="true"/>
     </dependencies>
     <feature-group name="mvc-krazo"/>
 </layer-spec>
