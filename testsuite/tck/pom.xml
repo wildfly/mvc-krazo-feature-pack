@@ -14,7 +14,7 @@
         Maintain separation between the artifact id and the version to help prevent
         merge conflicts between commits changing the GA and those changing the V.
         -->
-        <version>0.9.0.Final-SNAPSHOT</version>
+        <version>0.8.2.Final-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -138,7 +138,6 @@
                             <provisioning-dir>${project.build.directory}/wildfly-layers</provisioning-dir>
                             <layers>
                                 <layer>core-server</layer>
-                                <layer>jsf</layer> <!-- TCK wars need jakarta.faces.webapp.FacesServlet for some reason -->
                                 <layer>mvc-krazo</layer>
                             </layers>
                         </configuration>
