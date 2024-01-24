@@ -33,7 +33,6 @@
         <surefire.jpda.args>-agentlib:jdwp=transport=dt_socket,address=*:${as.debug.port},server=y,suspend=y</surefire.jpda.args>
         <as.debug.port>8787</as.debug.port>
         <surefire.system.args>${surefire.memory.args}</surefire.system.args>
-        <jboss.home>${project.build.directory}/wildfly</jboss.home>
         <server.jvm.args>${surefire.memory.args}</server.jvm.args>
 
         <!-- Feature pack to use to provision mvc-krazo -->
@@ -46,6 +45,9 @@
         <base.feature.pack.groupId>org.wildfly</base.feature.pack.groupId>
         <base.feature.pack.artifactId>wildfly-ee-galleon-pack</base.feature.pack.artifactId>
         <base.feature.pack.version>${version.org.wildfly}</base.feature.pack.version>
+        <!-- For some reason this needs to be true if base.feature.pack.artifactId=wildfly-galleon-pack
+             But make it externally controllable in case someone wants to test with this turned off -->
+        <ignore.not.excluded.layers>true</ignore.not.excluded.layers>
     </properties>
 
     <dependencyManagement>
@@ -151,13 +153,6 @@
                         <phase>compile</phase>
                         <configuration>
                             <provisioning-dir>${project.build.directory}/wildfly-complete</provisioning-dir>
-                            <feature-packs>
-                                <feature-pack>
-                                    <groupId>${project.groupId}</groupId>
-                                    <artifactId>wildfly-mvc-krazo-feature-pack</artifactId>
-                                    <version>${project.version}</version>
-                                </feature-pack>
-                            </feature-packs>
                         </configuration>
                     </execution>
                     <!-- Add the mvc-krazo subsystem to the wildfly-complete dist's standalone.xml -->
@@ -190,7 +185,6 @@
                         <ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                             org.wildfly.extension.mvc.krazo.tck.WildFlyArchiveProvider
                         </ee.jakarta.tck.mvc.api.BaseArchiveProvider>
-                        <jboss.home>${jboss.home}</jboss.home>
                         <server.jvm.args>${server.jvm.args}</server.jvm.args>
                     </systemProperties>
                     <argLine>${surefire.system.args}</argLine>
@@ -263,7 +257,7 @@
             <id>specified.base.provisioning.profile</id>
             <activation>
                 <property>
-                    <name>base.feature.pack.artifactId</name>
+                    <name>base.feature.pack.version</name>
                 </property>
             </activation>
             <build>
@@ -272,10 +266,13 @@
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-maven-plugin</artifactId>
                         <configuration>
+                            <galleon-options>
+                                <!-- For some reason this needs to be true if base.feature.pack.artifactId=wildfly-galleon-pack -->
+                                <ignore-not-excluded-layers>${ignore.not.excluded.layers}</ignore-not-excluded-layers>
+                            </galleon-options>
                             <feature-packs>
                                 <feature-pack>
                                     <location>${base.feature.pack.groupId}:${base.feature.pack.artifactId}:${base.feature.pack.version}</location>
-                                    <inherit-configs>false</inherit-configs>
                                     <inherit-packages>false</inherit-packages>
                                 </feature-pack>
                                 <feature-pack>
