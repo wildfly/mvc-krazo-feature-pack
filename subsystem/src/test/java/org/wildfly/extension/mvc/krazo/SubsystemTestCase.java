@@ -4,26 +4,40 @@
  */
 package org.wildfly.extension.mvc.krazo;
 
-import org.jboss.as.subsystem.test.AbstractSubsystemBaseTest;
+import static org.wildfly.extension.mvc.krazo.MVCKrazoExtension.SUBSYSTEM_NAME;
+import static org.wildfly.extension.mvc.krazo.MVCKrazoExtension.MVCKrazoSubsystemSchema.CURRENT;
 
 import java.io.IOException;
+import java.util.EnumSet;
+
+import org.jboss.as.subsystem.test.AbstractSubsystemSchemaTest;
+import org.jboss.as.version.Stability;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
- * This is the bare bones test example that tests subsystem
+ * Standard subsystem test.
  *
  * @author <a href="mailto:brian.stansberry@redhat.com">Brian Stansberry</a>
  */
-public class SubsystemTestCase extends AbstractSubsystemBaseTest {
+@RunWith(Parameterized.class)
+public class SubsystemTestCase extends AbstractSubsystemSchemaTest<MVCKrazoExtension.MVCKrazoSubsystemSchema> {
 
-    public SubsystemTestCase() {
-        super(MVCKrazoExtension.SUBSYSTEM_NAME, new MVCKrazoExtension());
+    @Parameterized.Parameters
+    public static Iterable<MVCKrazoExtension.MVCKrazoSubsystemSchema> parameters() {
+        return EnumSet.allOf(MVCKrazoExtension.MVCKrazoSubsystemSchema.class);
     }
 
-
-    @Override
-    protected String getSubsystemXml() throws IOException {
-        return "<subsystem xmlns=\"" + MVCKrazoExtension.NAMESPACE + "\">" +
-                "</subsystem>";
+    public SubsystemTestCase(MVCKrazoExtension.MVCKrazoSubsystemSchema schema) {
+        super(SUBSYSTEM_NAME, new MVCKrazoExtension(), schema, CURRENT);
     }
 
+    protected String getSubsystemXsdPath() throws Exception {
+        if (getSubsystemSchema() == MVCKrazoExtension.MVCKrazoSubsystemSchema.VERSION_1_0_LEGACY) {
+            // Provide the xsd file name we used with WF Preview 31
+            return "schema/mvc-krazo_1.0.xsd";
+        } else {
+            return super.getSubsystemXsdPath();
+        }
+    }
 }

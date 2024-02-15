@@ -187,6 +187,7 @@
                             org.wildfly.extension.mvc.krazo.tck.WildFlyArchiveProvider
                         </ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                         <server.jvm.args>${server.jvm.args}</server.jvm.args>
+                        <server.jboss.args>--stability=preview</server.jboss.args>
                     </systemProperties>
                     <argLine>${surefire.system.args}</argLine>
                 </configuration>

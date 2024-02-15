@@ -6,28 +6,18 @@ package org.wildfly.extension.mvc.krazo;
 
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUBSYSTEM;
 
-import java.util.List;
-
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-
-import org.jboss.as.controller.Extension;
-import org.jboss.as.controller.ExtensionContext;
 import org.jboss.as.controller.ModelVersion;
-import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.PathElement;
 import org.jboss.as.controller.PersistentResourceXMLDescription;
-import org.jboss.as.controller.SubsystemRegistration;
-import org.jboss.as.controller.descriptions.StandardResourceDescriptionResolver;
-import org.jboss.as.controller.operations.common.GenericSubsystemDescribeHandler;
-import org.jboss.as.controller.parsing.ExtensionParsingContext;
-import org.jboss.as.controller.persistence.SubsystemMarshallingContext;
-import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.dmr.ModelNode;
-import org.jboss.staxmapper.XMLElementReader;
-import org.jboss.staxmapper.XMLElementWriter;
-import org.jboss.staxmapper.XMLExtendedStreamReader;
-import org.jboss.staxmapper.XMLExtendedStreamWriter;
+import org.jboss.as.controller.PersistentSubsystemSchema;
+import org.jboss.as.controller.SubsystemModel;
+import org.jboss.as.controller.SubsystemSchema;
+import org.jboss.as.controller.xml.VersionedNamespace;
+import org.jboss.as.version.Stability;
+import org.jboss.staxmapper.IntVersion;
+import org.wildfly.subsystem.SubsystemConfiguration;
+import org.wildfly.subsystem.SubsystemExtension;
+import org.wildfly.subsystem.SubsystemPersistence;
 
 
 /**
@@ -35,74 +25,91 @@ import org.jboss.staxmapper.XMLExtendedStreamWriter;
  *
  * @author <a href="mailto:brian.stansberry@redhat.com">Brian Stansberry</a>
  */
-public final class MVCKrazoExtension implements Extension {
-
-    /**
-     * The name space used for the {@code substystem} element
-     */
-    public static final String NAMESPACE = "urn:jboss:domain:mvc-krazo:1.0";
+public final class MVCKrazoExtension extends SubsystemExtension<MVCKrazoExtension.MVCKrazoSubsystemSchema> {
 
     /**
      * The name of our subsystem within the model.
      */
-    public static final String SUBSYSTEM_NAME = "mvc-krazo";
-
-    /**
-     * The parser used for parsing our subsystem
-     */
-    private final SubsystemParser parser = new SubsystemParser();
+    static final String SUBSYSTEM_NAME = "mvc-krazo";
+    private static final Stability FEATURE_STABILITY = Stability.PREVIEW;
 
     static final PathElement SUBSYSTEM_PATH = PathElement.pathElement(SUBSYSTEM, SUBSYSTEM_NAME);
-    private static final String RESOURCE_NAME = MVCKrazoExtension.class.getPackage().getName() + ".LocalDescriptions";
 
-    static StandardResourceDescriptionResolver getResourceDescriptionResolver() {
-        return new StandardResourceDescriptionResolver(SUBSYSTEM_NAME, RESOURCE_NAME, MVCKrazoExtension.class.getClassLoader(), true, false);
+    public MVCKrazoExtension() {
+        super(SubsystemConfiguration.of(SUBSYSTEM_NAME, MVCKrazoSubsystemModel.CURRENT, MVCKrazoSubsystemRegistrar::new),
+                SubsystemPersistence.of(MVCKrazoSubsystemSchema.CURRENT));
     }
 
-    @Override
-    public void initializeParsers(ExtensionParsingContext context) {
-        context.setSubsystemXmlMapping(SUBSYSTEM_NAME, NAMESPACE, parser);
-    }
+    // TODO enable this when WildFly Galleon Plugin can handle it
+//    @Override
+//    public Stability getStability() {
+//        return FEATURE_STABILITY;
+//    }
 
+    /**
+     * Model for the 'mvc-krazo' subsystem.
+     */
+    public enum MVCKrazoSubsystemModel implements SubsystemModel {
+        VERSION_1_0_0(1, 0, 0),
+        ;
 
-    @Override
-    public void initialize(ExtensionContext context) {
-        final SubsystemRegistration subsystem = context.registerSubsystem(SUBSYSTEM_NAME, ModelVersion.create(1, 0));
-        final ManagementResourceRegistration registration = subsystem.registerSubsystemModel(MVCKrazoSubsystemDefinition.INSTANCE);
-        registration.registerOperationHandler(GenericSubsystemDescribeHandler.DEFINITION, GenericSubsystemDescribeHandler.INSTANCE);
+        static final MVCKrazoSubsystemModel CURRENT = VERSION_1_0_0;
 
-        subsystem.registerXMLElementWriter(parser);
+        private final ModelVersion version;
+
+        MVCKrazoSubsystemModel(int major, int minor, int micro) {
+            this.version = ModelVersion.create(major, minor, micro);
+        }
+
+        @Override
+        public ModelVersion getVersion() {
+            return this.version;
+        }
     }
 
     /**
-     * The subsystem parser, which uses stax to read and write to and from xml.
+     * Schema for the 'mvc-krazo' subsystem.
      */
-    private static class SubsystemParser implements XMLStreamConstants, XMLElementReader<List<ModelNode>>, XMLElementWriter<SubsystemMarshallingContext> {
+    public enum MVCKrazoSubsystemSchema implements PersistentSubsystemSchema<MVCKrazoSubsystemSchema> {
 
-        private final PersistentResourceXMLDescription xmlDescription;
+        /* urn:jboss:domain variant from WF Preview 31
+           It wasn't really DEFAULT stability, but its namespace didn't include 'preview'
+           so we work around that. See also getStability(). */
+        VERSION_1_0_LEGACY(1, 0, Stability.DEFAULT, true),
+        // first urn:wildfly variant
+        VERSION_1_1_PREVIEW(1, 1, FEATURE_STABILITY),
+        ;
 
-        private SubsystemParser() {
-            this.xmlDescription = PersistentResourceXMLDescription.builder(MVCKrazoSubsystemDefinition.INSTANCE.getPathElement())
+        static final MVCKrazoSubsystemSchema CURRENT = VERSION_1_1_PREVIEW;
+
+        private final VersionedNamespace<IntVersion, MVCKrazoSubsystemSchema> namespace;
+
+        MVCKrazoSubsystemSchema(int major, int minor, Stability stability) {
+            this(major, minor, stability, false);
+        }
+        MVCKrazoSubsystemSchema(int major, int minor, Stability stability, boolean legacy) {
+            if (legacy) {
+                this.namespace = SubsystemSchema.createLegacySubsystemURN(SUBSYSTEM_NAME, stability, new IntVersion(major, minor));
+            } else {
+                this.namespace = SubsystemSchema.createSubsystemURN(SUBSYSTEM_NAME, stability, new IntVersion(major, minor));
+            }
+        }
+
+        @Override
+        public VersionedNamespace<IntVersion, MVCKrazoSubsystemSchema> getNamespace() {
+            return this.namespace;
+        }
+
+        @Override
+        public Stability getStability() {
+            return this == VERSION_1_0_LEGACY ? Stability.PREVIEW : this.getNamespace().getStability();
+        }
+
+        @Override
+        public PersistentResourceXMLDescription getXMLDescription() {
+            PersistentResourceXMLDescription.Factory factory = PersistentResourceXMLDescription.factory(this);
+            return factory.builder(SUBSYSTEM_PATH)
                     .build();
         }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void writeContent(XMLExtendedStreamWriter writer, SubsystemMarshallingContext context) throws XMLStreamException {
-            ModelNode model = new ModelNode();
-            model.get(MVCKrazoSubsystemDefinition.INSTANCE.getPathElement().getKeyValuePair()).set(context.getModelNode());
-            xmlDescription.persist(writer, model, MVCKrazoExtension.NAMESPACE);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void readElement(XMLExtendedStreamReader reader, List<ModelNode> list) throws XMLStreamException {
-            xmlDescription.parse(reader, PathAddress.EMPTY_ADDRESS, list);
-        }
     }
-
 }
