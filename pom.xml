@@ -64,7 +64,7 @@
         <version.org.wildfly.galleon-plugins>6.5.3.Final</version.org.wildfly.galleon-plugins>
         <version.org.wildfly.licenses.plugin>2.4.0.Final</version.org.wildfly.licenses.plugin>
         <version.org.wildfly.plugins.wildfly-jar-maven-plugin>8.1.0.Final</version.org.wildfly.plugins.wildfly-jar-maven-plugin>
-        <version.org.wildfly.plugins.wildfly-maven-plugin>4.2.1.Final</version.org.wildfly.plugins.wildfly-maven-plugin>
+        <version.org.wildfly.plugins.wildfly-maven-plugin>4.2.2.Final</version.org.wildfly.plugins.wildfly-maven-plugin>
 
         <!-- Production code dependency versions -->
         <version.jakarta.mvc>2.1.0</version.jakarta.mvc>
