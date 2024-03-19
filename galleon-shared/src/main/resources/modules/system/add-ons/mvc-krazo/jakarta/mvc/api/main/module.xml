@@ -5,6 +5,10 @@
   -->
 <module xmlns="urn:jboss:module:1.9" name="jakarta.mvc.api">
 
+    <properties>
+        <property name="jboss.stability" value="preview"/>
+    </properties>
+
     <resources>
         <artifact name="${jakarta.mvc:jakarta.mvc-api}"/>
     </resources>
