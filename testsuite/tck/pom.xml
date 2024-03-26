@@ -127,6 +127,8 @@
                     <galleon-options>
                         <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                         <optional-packages>passive+</optional-packages>
+                        <config-stability-level>preview</config-stability-level>
+                        <package-stability-level>experimental</package-stability-level>
                     </galleon-options>
                 </configuration>
                 <executions>

@@ -26,19 +26,30 @@
         <galleon.shared.resources.directory>${project.basedir}/../galleon-shared/src/main/resources</galleon.shared.resources.directory>
         <license.directory>${project.build.directory}/resources/content/docs/licenses</license.directory>
     </properties>
-    
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <type>zip</type>
+                <version>${version.org.wildfly}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- feature pack dependencies -->
         <dependency>
             <groupId>org.wildfly</groupId>
             <artifactId>wildfly-ee-galleon-pack</artifactId>
             <type>zip</type>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
          <dependency>
             <groupId>org.wildfly.galleon-plugins</groupId>
@@ -136,7 +147,7 @@
                             <generateVersionProperty>true</generateVersionProperty>
                             <sortByGroupIdAndArtifactId>true</sortByGroupIdAndArtifactId>
                             <licensesConfigFiles>
-                                <licensesConfigFile>${galleon.shared.resources.directory}/license/licenses.xml</licensesConfigFile>
+                                <licensesConfigFile>${galleon.shared.resources.directory}/wildfly-mvc-krazo-license/licenses.xml</licensesConfigFile>
                             </licensesConfigFiles>
                             <licensesOutputFile>${license.directory}/wildfly-mvc-krazo-feature-pack-licenses.xml</licensesOutputFile>
                             <excludedGroups>org.wildfly.galleon-plugins</excludedGroups>
@@ -159,6 +170,8 @@
                             <fork-embedded>${galleon.fork.embedded}</fork-embedded>
                             <generate-channel-manifest>true</generate-channel-manifest>
                             <minimum-stability>preview</minimum-stability>
+                            <config-stability>preview</config-stability>
+                            <package-stability>preview</package-stability>
                         </configuration>
                     </execution>
                 </executions>
