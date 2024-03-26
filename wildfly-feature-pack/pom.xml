@@ -26,7 +26,7 @@
         <galleon.shared.resources.directory>${project.basedir}/../galleon-shared/src/main/resources</galleon.shared.resources.directory>
         <license.directory>${project.build.directory}/resources/content/docs/licenses</license.directory>
     </properties>
-    
+
     <dependencies>
         <!-- feature pack dependencies -->
         <dependency>
@@ -136,7 +136,7 @@
                             <generateVersionProperty>true</generateVersionProperty>
                             <sortByGroupIdAndArtifactId>true</sortByGroupIdAndArtifactId>
                             <licensesConfigFiles>
-                                <licensesConfigFile>${galleon.shared.resources.directory}/license/licenses.xml</licensesConfigFile>
+                                <licensesConfigFile>${galleon.shared.resources.directory}/wildfly-mvc-krazo-license/licenses.xml</licensesConfigFile>
                             </licensesConfigFiles>
                             <licensesOutputFile>${license.directory}/wildfly-mvc-krazo-feature-pack-licenses.xml</licensesOutputFile>
                             <excludedGroups>org.wildfly.galleon-plugins</excludedGroups>
