@@ -170,6 +170,8 @@
                             <fork-embedded>${galleon.fork.embedded}</fork-embedded>
                             <generate-channel-manifest>true</generate-channel-manifest>
                             <minimum-stability>preview</minimum-stability>
+                            <config-stability>preview</config-stability>
+                            <package-stability>preview</package-stability>
                         </configuration>
                     </execution>
                 </executions>
