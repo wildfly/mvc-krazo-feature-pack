@@ -27,18 +27,29 @@
         <license.directory>${project.build.directory}/resources/content/docs/licenses</license.directory>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <type>zip</type>
+                <version>${version.org.wildfly}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>*</groupId>
+                        <artifactId>*</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- feature pack dependencies -->
         <dependency>
             <groupId>org.wildfly</groupId>
             <artifactId>wildfly-ee-galleon-pack</artifactId>
             <type>zip</type>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
          <dependency>
             <groupId>org.wildfly.galleon-plugins</groupId>
