@@ -64,4 +64,4 @@ jobs:
          distribution: 'temurin'
          cache: 'maven'
      - name: Run TCK on ${{ matrix.OS }} with Java ${{ matrix.JDK }} using WildFly ${{ needs.wildfly-build.outputs.wildfly-version }}
-       run: mvn clean verify -pl testsuite/tck '-Dbase.feature.pack.artifactId=${{ inputs.wildfly-feature-pack-artifactId }} -Dbase.feature.pack.version=${{ needs.wildfly-build.outputs.wildfly-version }}'
+       run: mvn -B -ntp clean verify -pl testsuite/tck -Dkrazo.feature.pack.artifactId=${{ inputs.wildfly-feature-pack-artifactId }} -Dkrazo.feature.pack.version=${{ needs.wildfly-build.outputs.wildfly-version }}
