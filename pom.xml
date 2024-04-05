@@ -64,7 +64,7 @@
         <version.org.jboss.galleon>6.0.0.Beta6</version.org.jboss.galleon>
         <version.org.wildfly.galleon-plugins>7.0.0.Beta7</version.org.wildfly.galleon-plugins>
         <version.org.wildfly.licenses.plugin>2.4.1.Final</version.org.wildfly.licenses.plugin>
-        <version.org.wildfly.plugins.wildfly-maven-plugin>5.0.0.Beta4</version.org.wildfly.plugins.wildfly-maven-plugin>
+        <version.org.wildfly.plugins.wildfly-maven-plugin>5.0.0.Beta5</version.org.wildfly.plugins.wildfly-maven-plugin>
 
         <!-- Production code dependency versions -->
         <version.jakarta.mvc>2.1.0</version.jakarta.mvc>
