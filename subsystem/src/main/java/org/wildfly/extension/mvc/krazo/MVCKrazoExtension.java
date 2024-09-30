@@ -40,12 +40,6 @@ public final class MVCKrazoExtension extends SubsystemExtension<MVCKrazoExtensio
                 SubsystemPersistence.of(MVCKrazoSubsystemSchema.CURRENT));
     }
 
-    // TODO enable this when WildFly Galleon Plugin can handle it
-//    @Override
-//    public Stability getStability() {
-//        return FEATURE_STABILITY;
-//    }
-
     /**
      * Model for the 'mvc-krazo' subsystem.
      */
