@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.jboss</groupId>
         <artifactId>jboss-parent</artifactId>
-        <version>46</version>
+        <version>47</version>
     </parent>
 
     <groupId>org.wildfly</groupId>
@@ -60,10 +60,10 @@
         <galleon.offline>false</galleon.offline>
 
         <!-- Plugin dependency versions -->
-        <version.org.jboss.galleon>6.0.0.Final</version.org.jboss.galleon>
-        <version.org.wildfly.galleon-plugins>7.0.0.Final</version.org.wildfly.galleon-plugins>
-        <version.org.wildfly.licenses.plugin>2.4.1.Final</version.org.wildfly.licenses.plugin>
-        <version.org.wildfly.plugins.wildfly-maven-plugin>5.0.0.Final</version.org.wildfly.plugins.wildfly-maven-plugin>
+        <version.org.jboss.galleon>6.0.4.Final</version.org.jboss.galleon>
+        <version.org.wildfly.galleon-plugins>7.3.1.Final</version.org.wildfly.galleon-plugins>
+        <version.org.wildfly.licenses.plugin>2.4.2.Final</version.org.wildfly.licenses.plugin>
+        <version.org.wildfly.plugins.wildfly-maven-plugin>5.1.1.Final</version.org.wildfly.plugins.wildfly-maven-plugin>
 
         <!-- Production code dependency versions -->
         <version.jakarta.mvc>2.1.0</version.jakarta.mvc>
