@@ -40,8 +40,10 @@ final class DeploymentDependenciesProcessor implements DeploymentUnitProcessor {
     public void deploy(DeploymentPhaseContext phaseContext) {
         final DeploymentUnit deploymentUnit = phaseContext.getDeploymentUnit();
 
-        if (!DeploymentTypeMarker.isType(DeploymentType.WAR, deploymentUnit)) {
-            return; // Skip non web deployments
+        // Skip deployments other than ears and wars
+        if (!DeploymentTypeMarker.isType(DeploymentType.WAR, deploymentUnit)
+                && !DeploymentTypeMarker.isType(DeploymentType.EAR, deploymentUnit)) {
+            return;
         }
 
         final ModuleSpecification moduleSpecification = deploymentUnit.getAttachment(Attachments.MODULE_SPECIFICATION);
