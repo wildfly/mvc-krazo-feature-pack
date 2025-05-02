@@ -50,11 +50,25 @@ final class DeploymentDependenciesProcessor implements DeploymentUnitProcessor {
         final ModuleLoader moduleLoader = Module.getBootModuleLoader();
         // Use addSystemDependencies instead of multiple calls to addSystemDependency to avoid WFCORE-6601
         moduleSpecification.addSystemDependencies(Set.of(
-                new ModuleDependency(moduleLoader, MVCKrazoSubsystemRegistrar.MVC_API, false, true, true, false),
-                new ModuleDependency(moduleLoader, MVCKrazoSubsystemRegistrar.KRAZO_CORE, false, true, true, false),
-                new ModuleDependency(moduleLoader, MVCKrazoSubsystemRegistrar.KRAZO_RESTEASY, false, true, true, false)
+                ModuleDependency.Builder.of(moduleLoader, MVCKrazoSubsystemRegistrar.MVC_API)
+                        .setOptional(false)
+                        .setExport(true)
+                        .setImportServices(true)
+                        .setUserSpecified(false)
+                        .build(),
+                ModuleDependency.Builder.of(moduleLoader, MVCKrazoSubsystemRegistrar.KRAZO_CORE)
+                        .setOptional(false)
+                        .setExport(true)
+                        .setImportServices(true)
+                        .setUserSpecified(false)
+                        .build(),
+                ModuleDependency.Builder.of(moduleLoader, MVCKrazoSubsystemRegistrar.KRAZO_RESTEASY)
+                        .setOptional(false)
+                        .setExport(true)
+                        .setImportServices(true)
+                        .setUserSpecified(false)
+                        .build()
         ));
-
     }
 
 }
