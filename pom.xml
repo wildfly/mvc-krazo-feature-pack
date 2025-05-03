@@ -60,7 +60,7 @@
         <galleon.offline>false</galleon.offline>
 
         <!-- Plugin dependency versions -->
-        <version.org.jboss.galleon>6.0.4.Final</version.org.jboss.galleon>
+        <version.org.jboss.galleon>6.0.5.Final</version.org.jboss.galleon>
         <version.org.wildfly.galleon-plugins>7.3.1.Final</version.org.wildfly.galleon-plugins>
         <version.org.wildfly.licenses.plugin>2.4.2.Final</version.org.wildfly.licenses.plugin>
         <version.org.wildfly.plugins.wildfly-maven-plugin>5.1.3.Final</version.org.wildfly.plugins.wildfly-maven-plugin>
