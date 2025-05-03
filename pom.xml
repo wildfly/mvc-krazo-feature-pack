@@ -40,10 +40,12 @@
     </scm>
 
     <properties>
-        <!-- Require Java 11 -->
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.release>11</maven.compiler.release>
+        <!-- Require Java 17 -->
+        <required.java.build.version>[17,)</required.java.build.version>
+        <required.java.deploy.version>[17,18)</required.java.deploy.version>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.release>17</maven.compiler.release>
 
         <wildfly-extras.repo.scm.connection>git@github.com:wildfly-extras/mvc-krazo-feature-pack.git</wildfly-extras.repo.scm.connection>
         <wildfly-extras.repo.scm.url>https://github.com/wildfly-extras/mvc-krazo-feature-pack</wildfly-extras.repo.scm.url>
