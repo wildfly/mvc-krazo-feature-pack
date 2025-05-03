@@ -156,6 +156,14 @@
             <version>${version.junit.junit}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-embedded</artifactId>
+            <version>${version.org.wildfly.core}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.eclipse.krazo</groupId>
             <artifactId>krazo-core</artifactId>
