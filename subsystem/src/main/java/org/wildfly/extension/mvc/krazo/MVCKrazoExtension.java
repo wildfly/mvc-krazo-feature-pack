@@ -8,10 +8,11 @@ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUB
 
 import org.jboss.as.controller.ModelVersion;
 import org.jboss.as.controller.PathElement;
-import org.jboss.as.controller.PersistentResourceXMLDescription;
-import org.jboss.as.controller.PersistentSubsystemSchema;
 import org.jboss.as.controller.SubsystemModel;
 import org.jboss.as.controller.SubsystemSchema;
+import org.jboss.as.controller.persistence.xml.ResourceXMLParticleFactory;
+import org.jboss.as.controller.persistence.xml.SubsystemResourceRegistrationXMLElement;
+import org.jboss.as.controller.persistence.xml.SubsystemResourceXMLSchema;
 import org.jboss.as.controller.xml.VersionedNamespace;
 import org.jboss.as.version.Stability;
 import org.jboss.staxmapper.IntVersion;
@@ -69,7 +70,7 @@ public final class MVCKrazoExtension extends SubsystemExtension<MVCKrazoExtensio
     /**
      * Schema for the 'mvc-krazo' subsystem.
      */
-    public enum MVCKrazoSubsystemSchema implements PersistentSubsystemSchema<MVCKrazoSubsystemSchema> {
+    public enum MVCKrazoSubsystemSchema implements SubsystemResourceXMLSchema<MVCKrazoSubsystemSchema> {
 
         /* urn:jboss:domain variant from WF Preview 31
            It wasn't really DEFAULT stability, but its namespace didn't include 'preview'
@@ -82,6 +83,7 @@ public final class MVCKrazoExtension extends SubsystemExtension<MVCKrazoExtensio
         static final MVCKrazoSubsystemSchema CURRENT = VERSION_1_1_PREVIEW;
 
         private final VersionedNamespace<IntVersion, MVCKrazoSubsystemSchema> namespace;
+        private final ResourceXMLParticleFactory factory = ResourceXMLParticleFactory.newInstance(this);
 
         MVCKrazoSubsystemSchema(int major, int minor, Stability stability) {
             this(major, minor, stability, false);
@@ -105,10 +107,8 @@ public final class MVCKrazoExtension extends SubsystemExtension<MVCKrazoExtensio
         }
 
         @Override
-        public PersistentResourceXMLDescription getXMLDescription() {
-            PersistentResourceXMLDescription.Factory factory = PersistentResourceXMLDescription.factory(this);
-            return factory.builder(SUBSYSTEM_PATH)
-                    .build();
+        public SubsystemResourceRegistrationXMLElement getSubsystemXMLElement() {
+            return this.factory.subsystemElement(MVCKrazoSubsystemRegistrar.REGISTRATION).build();
         }
     }
 }

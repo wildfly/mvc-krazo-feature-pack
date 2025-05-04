@@ -28,6 +28,7 @@ import org.wildfly.subsystem.resource.SubsystemResourceDefinitionRegistrar;
 final class MVCKrazoSubsystemRegistrar implements SubsystemResourceDefinitionRegistrar {
 
     static final ParentResourceDescriptionResolver RESOLVER = new SubsystemResourceDescriptionResolver(SUBSYSTEM_NAME, MVCKrazoSubsystemRegistrar.class);
+    static final ResourceRegistration REGISTRATION = ResourceRegistration.of(SUBSYSTEM_PATH);
 
     static final String MVC_API = "jakarta.mvc.api";
     static final String KRAZO_CORE = "org.eclipse.krazo.core";
@@ -35,7 +36,7 @@ final class MVCKrazoSubsystemRegistrar implements SubsystemResourceDefinitionReg
 
     @Override
     public ManagementResourceRegistration register(SubsystemRegistration parent, ManagementResourceRegistrationContext managementResourceRegistrationContext) {
-        ResourceDefinition definition = ResourceDefinition.builder(ResourceRegistration.of(SUBSYSTEM_PATH), RESOLVER).build();
+        ResourceDefinition definition = ResourceDefinition.builder(REGISTRATION, RESOLVER).build();
         ManagementResourceRegistration registration = parent.registerSubsystemModel(definition);
         ResourceDescriptor descriptor = ResourceDescriptor.builder(RESOLVER)
                 .withDeploymentChainContributor(MVCKrazoSubsystemRegistrar::registerDeploymentUnitProcessors)
