@@ -11,6 +11,12 @@ The build includes a `wildfly-maven-plugin` execution that uses the embedded CLI
 
 The build then runs two `surefire` executions, running the TCK against each of the two WildFly installations.
 
+## TCK Options
+
+The version of the TCK to use can be controlled by providing the `jakarta.mvc.tck` system property. By default, this property is set to the value of the `jakarta.mvc` maven property, which is used when building this repository to control the version of the Jakarta MVC API artifact.
+
+The use case for setting this would be when running the TCK against a feature pack other than the one produced by the overall build of this repository (see below for more on that).
+
 ## Feature Pack Options
 
 System properties can be used to control the feature pack(s) used for provisioning, thus allowing this TCK runner to test feature packs other than the one produced from the overall build of this repository.
