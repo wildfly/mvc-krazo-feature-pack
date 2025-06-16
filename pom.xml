@@ -73,7 +73,7 @@
         <version.org.eclipse.krazo>3.0.1</version.org.eclipse.krazo>
         <version.org.wildfly>36.0.0.Final</version.org.wildfly>
         <version.org.wildfly.common>2.0.1</version.org.wildfly.common>
-        <version.org.wildfly.core>28.0.0.Final</version.org.wildfly.core>
+        <version.org.wildfly.core>28.0.1.Final</version.org.wildfly.core>
 
         <!-- Test dependency versions -->
         <version.junit.junit>4.13.2</version.junit.junit>
