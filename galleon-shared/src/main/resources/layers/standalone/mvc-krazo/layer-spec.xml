@@ -6,6 +6,8 @@
 
 <layer-spec xmlns="urn:jboss:galleon:layer-spec:2.0" name="mvc-krazo">
     <props>
+        <prop name="org.wildfly.category" value="Jakarta MVC"/>
+        <prop name="org.wildfly.description" value="Support for Jakarta MVC."/>
         <prop name="org.wildfly.rule.annotations" value="jakarta.mvc"/>
         <prop name="org.wildfly.rule.class" value="jakarta.mvc"/>
     </props>
