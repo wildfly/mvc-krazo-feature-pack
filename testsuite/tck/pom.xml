@@ -27,7 +27,7 @@
     <properties>
 
         <version.org.jboss.arquillian>1.9.5.Final</version.org.jboss.arquillian>
-        <version.org.wildfly.arquillian>5.0.1.Final</version.org.wildfly.arquillian>
+        <version.org.wildfly.arquillian>5.1.0.Final</version.org.wildfly.arquillian>
 
         <version.jakarta.mvc.tck>${version.jakarta.mvc}</version.jakarta.mvc.tck>
 
