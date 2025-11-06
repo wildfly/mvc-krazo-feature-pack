@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.jboss</groupId>
         <artifactId>jboss-parent</artifactId>
-        <version>49</version>
+        <version>51</version>
     </parent>
 
     <groupId>org.wildfly</groupId>
@@ -23,6 +23,18 @@
 
     <name>WildFly Jakarta MVC with Krazo -- Parent</name>
     <description>Parent pom for producing a Galleon feature pack for including a Jakarta MVC capability into a WildFly installation.</description>
+    <url>https://github.com/wildfly-extras/mvc-krazo-feature-pack</url>
+
+    <developers>
+        <developer>
+            <id>bstansberry</id>
+            <name>Brian Stansberry</name>
+            <url>https://github.com/bstansberry</url>
+            <organization>IBM</organization>
+            <organizationUrl>https://www.ibm.com</organizationUrl>
+        </developer>
+        <!-- and many others -->
+    </developers>
 
     <licenses>
         <license>
@@ -55,6 +67,10 @@
         <assembly.tarLongFileMode>posix</assembly.tarLongFileMode>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Repository Deployment Settings -->
+        <nexus.repository.staging>wildfly-extras-staging</nexus.repository.staging>
+        <nexus.staging.tag>mvc-krazo-feature-pack-${project.version}</nexus.staging.tag>
 
         <!-- Galleon provisioning settings -->
         <galleon.fork.embedded>true</galleon.fork.embedded>
