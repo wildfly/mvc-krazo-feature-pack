@@ -1,27 +1,28 @@
-:toc:
-
-= Contributing Guide
+# Contributing Guide
 
 Want to contribute to the WildFly MVC Krazo Feature Pack? We try to make it easy, and all contributions, even the smaller ones,
-are more than welcome. This includes bug reports, fixes, documentation, etc. First though, please read this page
-(including the small print at the end).
+are more than welcome. This includes bug reports, fixes, documentation, etc. First though, please read this page.
 
-== Legal
+## Legal
 
-All original contributions to the WildFly MVC Krazo Feature Pack are licensed under the
-https://repository.jboss.org/licenses/apache-2.0.txt[Apache License Version 2.0], or, if another
-license is specified as governing the file or directory being modified, such other license.
+All contributions to this repository are licensed under the [Apache License](https://www.apache.org/licenses/LICENSE-2.0), version 2.0 or later, or, if another license is specified as governing the file or directory being modified, such other license.
 
-All contributions are subject to the https://developercertificate.org/[Developer Certificate of Origin (DCO)].
+All contributions are subject to the [Developer Certificate of Origin (DCO)](https://developercertificate.org/).
 The DCO text is also included verbatim in the [dco.txt](dco.txt) file in the root directory of the repository.
 
-== Reporting an issue
+### Compliance with Laws and Regulations
+
+All contributions must comply with applicable laws and regulations, including U.S. export control and sanctions restrictions.
+For background, see the Linux Foundation’s guidance:
+[Navigating Global Regulations and Open Source: US OFAC Sanctions](https://www.linuxfoundation.org/blog/navigating-global-regulations-and-open-source-us-ofac-sanctions).
+
+## Reporting an issue
 
 This project uses https://github.com/wildfly-extras/mvc-krazo-feature-pack/issues[GitHub issues] for filing issues.
 
 If you believe you found a bug, and it's likely possible, please indicate a way to reproduce it, i.e. what you are seeing and what you would expect to see.
 
-== Before you contribute
+## Before you contribute
 
 To contribute, use GitHub Pull Requests, from your **own** fork.
 
@@ -36,32 +37,47 @@ If you use different computers to contribute, please make sure the name is the s
 
 We use this information to acknowledge your contributions in release announcements.
 
-== Setup
+### Setup
 
 If you have not done so on this machine, you need to:
 
 * Install Git and configure your GitHub access
-* Install Java SDK 11+ (OpenJDK recommended)
+* Install Java SDK 17+ (OpenJDK recommended)First `cd` to the directory where you cloned the project (eg: `cd wildfly-transaction-client`)
 
-=== IDE Config and Code Style
+First `cd` to the directory where you cloned the project (eg: `cd mvc-krazo-feature-pack`)
 
-The WildFly Arquillian Adapter has a strictly enforced code style. Code formatting is done by the Eclipse code formatter,
-using the config files found in the
-https://github.com/wildfly/wildfly-dev-tools/tree/main/ide-config/src/main/resources[eclipse-code-formatter.xml]
-file. By default, when you run `./mvnw install`, the code will be formatted automatically. When submitting a pull
-request the CI build will fail if running the formatter results in any code changes, so it is recommended that you
-always run a full Maven build before submitting a pull request.
+Add a remote ref to upstream, for pulling future updates.
+For example:
 
-If you want to run the formatting without doing a full build, you can run `./mvnw process-sources`.
+```
+git remote add upstream https://github.com/wildfly/mvc-krazo-feature-pack
+```
 
-==== Eclipse Setup
+### Building and Testing
 
-Open the *Preferences* window, and then navigate to _Java_ -> _Code Style_ -> _Formatter_. Click _Import_ and then
-select the `eclipse-code-formatter.xml` downloaded from the above link or clone the repository and navigate to the file.
+To build `mvc-krazo-feature-pack` run:
+```bash
+mvn clean install
+```
 
-Next navigate to _Java_ -> _Code Style_ -> _Organize Imports_. Click _Import_ and select the `eclipse.importorder` file.
+To skip the tests, use:
 
-==== IDEA Setup
+```bash
+mvn clean install -DskipTests=true
+```
 
-Install the https://plugins.jetbrains.com/plugin/6546-adapter-for-eclipse-code-formatter/[Adapter for Eclipse Code Formatter].
-See the https://github.com/krasa/EclipseCodeFormatter#instructions[documentation] on how to configure the plugin.
+To run only a specific test, use:
+
+```bash
+mvn clean install -Dtest=TestClassName
+```
+
+## Contributing Guidelines
+
+When submitting a PR, please keep the following guidelines in mind:
+
+1. In general, it's good practice to squash all of your commits into a single commit. For larger changes, it's ok to have multiple meaningful commits. If you need help with squashing your commits, feel free to ask us how to do this on your pull request. We're more than happy to help.
+
+  1. Please include the GitHub issue you worked on in the title of your pull request and in your commit message. For example, for [Issue 126](https://github.com/wildfly/mvc-krazo-feature-pack/issues/126), the PR title and commit message should be `[Issue_126] Allow separate configuration of the MVC TCK version`
+
+2. Please include the `Resolves` link to the GitHub issue you worked on in the description of the pull request. For example, if your PR adds a fix for [WFTC-87](https://issues.redhat.com/browse/WFTC-87), the PR description should include the statement `Resolves #126`. GitHub will convert the `#126` to a link to the issue and will automatically close the issue when the PR is merged.
