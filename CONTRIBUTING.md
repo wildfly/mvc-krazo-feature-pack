@@ -28,10 +28,10 @@ To contribute, use GitHub Pull Requests, from your **own** fork.
 
 Also, make sure you have set up your Git authorship correctly:
 
-----
+```bash
 git config --global user.name "Your Full Name"
 git config --global user.email your.email@example.com
-----
+```
 
 If you use different computers to contribute, please make sure the name is the same on all your computers.
 
